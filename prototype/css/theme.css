@@ -28,6 +28,11 @@ html,body{
     padding:20px;
     color:white;
     position: relative;
+    transition: all 0.1s;
+}
+
+.module.failed{
+    background-color:rgba(237,28,36,0.25);
 }
 
 .dial{
@@ -51,4 +56,27 @@ html,body{
     text-align: center;
     color:rgb(57,181,74);
     font-family: 'Lato', sans-serif;
+}
+
+.module.failed .value{
+    color:rgba(237,28,36,1);
+}
+
+.failures{
+    position: absolute;
+    top:20px;
+    right:20px;
+    opacity: 0;
+    transition: all 0.1s;
+}
+
+.module.failed .failures{
+    opacity: 1;
+}
+
+.failure{
+    padding:2px;
+    color:rgba(237,28,36,1);
+    background-color:rgba(237,28,36,0.2);
+    border-radius: 2px;
 }

@@ -11,6 +11,7 @@
         <div id="modules"><!--
 no space --><div id="hopper" class="module">
                 <div class="moduleTitle">Hopper</div>
+                <div class="failures"></div>
                 <div class="dial">
                     <div class="segments" data-min="0" data-max="120">
                         <div class="segment yellow" data-min="0" data-max="40"></div>
@@ -24,7 +25,12 @@ no space --><div id="hopper" class="module">
             </div><!--
 no space --><div id="fillHead" class="module">
                 <div class="moduleTitle">Fill Head</div>
+                <div class="failures"></div>
                 <div class="dial">
+                    <div class="segments" data-min="0" data-max="20000">
+                        <div class="segment yellow" data-min="0" data-max="180"></div>
+                        <div class="segment green" data-min="180" data-max="20000"></div>
+                    </div>
                     <div class="value">0</div>
                     <canvas class="dialCanvas">
                         Canvas not available.
@@ -63,6 +69,7 @@ no space --></div>
         
         
         <script src="js/dial.js"></script>
+        <script src="js/station.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>

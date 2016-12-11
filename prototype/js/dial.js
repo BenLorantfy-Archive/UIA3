@@ -1,11 +1,11 @@
 // This class is a modified version of https://github.com/rheh/HTML5-canvas-projects/tree/master/speedometer with
 // some styling and structural changes
 
-var Dial = function(userCanvas){
+var Dial = function(userCanvas,segments){
     var theCanvas = userCanvas;
     var canvasWidth = userCanvas.offsetWidth;
     theCanvas.setAttribute("width",canvasWidth);
-    theCanvas.setAttribute("height",canvasWidth * 0.4);
+    theCanvas.setAttribute("height",canvasWidth * 0.45);
     
     var iCurrentSpeed = 20,
         iTargetSpeed = 20,
@@ -351,8 +351,19 @@ var Dial = function(userCanvas){
 
         var startOfGreen = 120;
 
-        drawSpeedometerPart(options, 1.0, "rgb(255, 242, 0)", 10,120);
-        drawSpeedometerPart(options, 0.9, "rgb(57, 181, 74)", startOfGreen);
+        for(var i = 0; i < segments.length; i++){
+            var color = segments[i].color;
+            if(color == "yellow") color = "rgb(255, 242, 0)";
+            if(color == "green") color = "rgb(57, 181, 74)";
+            
+            drawSpeedometerPart(options,1.0,color,segments[i].min * 1,segments[i].max * 1);
+        }
+        
+//        drawSpeedometerPart(options, 1.0, "rgb(255, 242, 0)", 0,40);
+//        drawSpeedometerPart(options, 1.0, "rgb(57, 181, 74)", 40,120);
+        
+//        drawSpeedometerPart(options, 1.0, "rgb(255, 242, 0)", 10,120);
+//        drawSpeedometerPart(options, 0.9, "rgb(57, 181, 74)", startOfGreen);
     //	drawSpeedometerPart(options, 0.9, "rgb(255, 0, 0)", endOfOrange);
 
     }

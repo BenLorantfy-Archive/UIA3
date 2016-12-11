@@ -1,27 +1,31 @@
 var Simulator = (function(){
     var stations = {};
     $(".module").each(function(){
-        if($(this).find("canvas").length == 0) return;
+        var station = new Station(this);
         
-        var el = $(this);
-        var id = $(this).attr("id");
-        var station = new Dial(el.find("canvas")[0]);
-        station.change(function(value){
-            el.find(".value").text(Math.round(value * 1.2));
-        });
+        // [ Add the specific fail conditions ]
+        if(station.name == "hopper"){
+            station.dial.change(function(value){
+                if(value == 0){
+                    station.fail("No Cans");
+                }
+            })
+        }
         
-        setTimeout(function(){
-            station.set(50);     
-        },150);
-            
              
-        stations[id] = station;
+        stations[station.name] = station;
     });
     
     return {
         Hopper:{
             outOfCans:function(){
                 stations["hopper"].set(0);
+            }
+        }
+        ,FillHead:{
+            clog:function(){
+                console.log(stations);
+                stations["fillHead"].fail("Clogged");
             }
         }
     }
