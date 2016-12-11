@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>Speedometer HTML5 Canvas</title>
+		<script src="js/dial.js"></script>
+        <style>
+            body{
+                background-color:rgba(0,166,81,0.7);
+            }
+            
+        </style>
+	</head>
+	<body>
+		<canvas id="tutorial" class="dialCanvas">
+			Canvas not available.
+		</canvas>
+		<div>
+			<form id="drawTemp">
+				<input type="text" id="txtSpeed" name="txtSpeed"/>
+				<input type="button" value="Draw" onclick="dial.set(txtSpeed.value);">
+			</form>
+		</div>
+        
+        <script>
+            var dial = new Dial(tutorial);
+            dial.set(0);
+        </script>
+	</body>
+</html>
