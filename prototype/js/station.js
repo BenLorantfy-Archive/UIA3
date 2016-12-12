@@ -1,12 +1,37 @@
 var Station = function(el){
+    
     // [ Make sure el is jquery object ]
     el = $(el);
     
-    if(el.find("canvas").length == 0) return;
+    var id = el.attr("id");
+    
+    function fail(message){
+        if(message){
+            var failure = $("<div class='failure'></div>");
+            failure.text(message);
+            el.find(".failures").append(failure);       
+        }
+        el.addClass("failed");
+    }
+    
+    if(el.find(".dialCanvas").length == 0){
+//        el.find("label").text("")
+        
+        return {
+            name:id,
+            fail:function(message){
+                el.find(".label").text(message);
+                
+                fail();
+            }
+        };
+    }
     
     // [ Create the segments ]
     var segments = [];
-    var size = el.find(".segments").data("max") * 1 - el.find(".segments").data("min") * 1;
+    var min = el.find(".segments").data("min") * 1;
+    var max = el.find(".segments").data("max") * 1;
+    var size = max - min;
     el.find(".segment").each(function(){
         var color = "white";
         if($(this).hasClass("green")) color = "green";
@@ -14,17 +39,16 @@ var Station = function(el){
 
         var segment = {
              color:color
-            ,min:($(this).data("min") * 1 == 0) ? 0 : (($(this).data("min") / size) * 360)
-            ,max:($(this).data("max") * 1 == 0) ? 0 : (($(this).data("max") / size) * 360)
+            ,min:(($(this).data("min") * 1 == 0) ? 0 : ((($(this).data("min") - min) / size) * 360)) 
+            ,max:(($(this).data("max") * 1 == 0) ? 0 : ((($(this).data("max") - min) / size) * 360))
         };
 
         segments.push(segment);
     })
 
-    var id = el.attr("id");
     var dial = new Dial(el.find("canvas")[0],segments);
     dial.change(function(value){
-        var text = Math.round(value/100 * size);
+        var text = Math.round(value/100 * size) + min;
         el.find(".value").text(text);
 
         if(text.toString().length >= 4){
@@ -44,12 +68,9 @@ var Station = function(el){
     return {
         name:id,
         dial:dial,
-        set:dial.set,
-        fail:function(message){
-            var failure = $("<div class='failure'></div>");
-            failure.text(message);
-            el.find(".failures").append(failure);
-            el.addClass("failed");
-        }
+        set:function(value){
+            dial.set(value)   
+        },
+        fail:fail
     }
 }
